@@ -211,6 +211,8 @@ func fillStatsCloc(r io.Reader, l *gocloc.Language, ff *fileStats) {
 
 func fillStatsPlaintext(r io.Reader, ff *fileStats) error {
 	s := bufio.NewScanner(r)
+	buf := make([]byte, 0, 64*1024)
+	s.Buffer(buf, 1024*1024*8)
 	for s.Scan() {
 		ff.addOther(s.Text())
 	}
